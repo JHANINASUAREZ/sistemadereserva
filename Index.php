@@ -59,16 +59,16 @@
             </div>
            
             <div class="px-lg-5 py-lg-4 p-4 w-100 mb-auto align-self-center">
-                <h1 class="front-weight-bold mb-4 " > Iniciar Sesion</h1>
+                <h1 class="front-weight-bold mb-4 " > Iniciar Sesión</h1>
 
                 <form method="post"  class="my-4">
-                <?php 
-                include "controlador/controlador_login.php";
-                ?>
+             
                     <div class="mb-4">
                       <label for="exampleInputEmail1" class=" front-weight-bold">Correo electronico</label>
                       <input type="email" name="correo" class="form-control border-0" placeholder="Ingresa tu correo electronco"id="exampleInputEmail1" aria-describedby="emailHelp">
-                    
+                      <?php if(isset($_POST["btningresar"]) && empty($_POST["correo"])): ?>
+                  <div class="text-danger">El campo de correo electrónico es obligatorio</div>
+        <?php endif; ?>
                     </div>
                     <div class="mb-4">
                  <label for="exampleInputPassword1" class="form-label front-weight-bold">Contraseña</label>
@@ -77,8 +77,13 @@
                      <span class="input-group-text" onclick="Vista_form();" style="width: 45px; height: 36px;">
                          <i class="bi bi-eye" id="ver"></i>
                          <i class="bi bi-eye-slash" id="ocultar" style="display: none;"></i>
-                      </span>
+                     
+                        </span>
+                        
                  </div>
+                 <?php if(isset($_POST["btningresar"]) && empty($_POST["password"])): ?>
+            <div class="text-danger">El campo de contraseña es obligatorio</div>
+        <?php endif; ?>
                  <a href="recpassword.php" id="ContraseñaHelp" class="form-text text-decoration-none">¿Has olvidado tu contraseña?</a>
              </div>
 
