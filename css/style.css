@@ -20,11 +20,7 @@ body{
     background-color: var(--dark-x);
 }
 
-.form-control, btn{
-     min-height: 3.3rem;
-     line-height: initial;
 
-}
 
 .img-1{
     background-image: url('Imagen1.jpg');
@@ -34,4 +30,14 @@ body{
 }
 .img-3{
     background-image: url('Imagen3.jpg');
+}
+.eye-button {
+    color: white;
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}
+.carousel-item img {
+    max-width: 750px;
+    max-height: 580px;
 }

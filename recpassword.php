@@ -52,7 +52,7 @@
 
            <div class="col-lg-5 d-flex flex-column align-items-center min-vh-100">
             <div class="px-lg-5 pt-lg-4 pb-lg-3 p-4 w-100 mb-auto">
-               <img src="Img/Logoumss.png" class="img-fluid">
+               <img src="Img/Logo-fcyt.png" class="img-fluid">
             </div>
             <div class="px-lg-5 py-lg-4 p-4 w-100 mb-auto align-self-center">
                 <h1 class="front-weight-bold mb-4 " > Reestablecer Contraseña</h1>
@@ -73,7 +73,7 @@
                             <button type="submit" class="btn btn-outline-success w-100">Enviar</button>
                         </div>
                         <div class="flex-grow-1 ms-2">
-                            <button type="cancelButton" class="btn btn-outline-danger w-100">Cancelar</button>
+                        <a href="index.php" class="btn btn-outline-danger w-100">Cancelar</a>
                         </div>
                     </div>
                   </form>
