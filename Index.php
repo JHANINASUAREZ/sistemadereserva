@@ -11,15 +11,25 @@
     <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@300;600&display=swap" rel="stylesheet">
     
   </head>
-  <body class="bg-dark" >
+  <body class="area" >
+      <ul class="circles">
+      <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
     <section>
         <div class="row g-0">
             <div class="col-lg-7">
                 <div id="carouselExampleCaptions" class="carousel slide  vh-100" data-bs-ride="carousel">
                     <div class="carousel-indicators">
                       <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 1"></button>
                     </div>
                     <div class="carousel-inner">
                       <div class="carousel-item img-1 min-vh-100 active">
@@ -28,12 +38,7 @@
                             <h5 class=" front-weight-bold">Explora, elige y reserva tu aula ideal en un clic.</h5>
                         </div>
                       </div>
-                      <div class="carousel-item img-2 min-vh-100">
-                      <img src="Img/Imagen2.jpg" class="d-block w-100 " />
-                        <div class="carousel-caption d-none d-md-block">
-                            <h5 class=" front-weight-bold">Tu aula te espera. ¡Resérvala ahora!</h5>
-                        </div>
-                      </div>
+                  
                       <div class="carousel-item img-3 min-vh-100">
                       <img src="Img/Imagen3.jpg" class="d-block w-100 " />
                         <div class="carousel-caption d-none d-md-block">
@@ -54,27 +59,28 @@
             
 
            <div class="col-lg-5 d-flex flex-column align-items-center justify-content-center min-vh-100">
-            <div class="px-lg-5 py-lg-4 p-4 w-100 mb-auto">
-               <img src="Img/Logo-fcyt.png" class="img-fluid mx-auto">
+            <div class="px-lg-5 py-lg-4 p-4 w-90 mb-auto">
+               <img src="Img/Fcyt.png" class="img-fluid mx-auto">
             </div>
            
             <div class="px-lg-5 py-lg-4 p-4 w-100 mb-auto align-self-center">
-                <h1 class="front-weight-bold mb-4 " > Iniciar Sesión</h1>
-
+                <h1 class="font-weight-bold mb-4" > Iniciar Sesión</h1>
+              
                 <form method="post"  class="my-4">
              
                     <div class="mb-4">
                       <label for="exampleInputEmail1" class=" front-weight-bold">Correo electronico</label>
-                      <input type="email" name="correo" class="form-control border-0" placeholder="Ingresa tu correo electronco"id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <input type="email" name="correo" class="form-control" placeholder="Ingresa tu correo electronico"id="exampleInputEmail1" aria-describedby="emailHelp">
                       <?php if(isset($_POST["btningresar"]) && empty($_POST["correo"])): ?>
-                  <div class="text-danger">El campo de correo electrónico es obligatorio</div>
+                  <div class="text-danger">
+                    Correo electrónico es obligatorio</div>
         <?php endif; ?>
                     </div>
                     <div class="mb-4">
                  <label for="exampleInputPassword1" class="form-label front-weight-bold">Contraseña</label>
                  <div class="input-group">
-                     <input type="password" name="password" id="pass" class="form-control border-0 mb-2" placeholder="Ingresa tu contraseña" id="exampleInputPassword1">
-                     <span class="input-group-text" onclick="Vista_form();" style="width: 45px; height: 36px;">
+                     <input type="password" name="password" id="pass" class="form-control mb-2" placeholder="Ingresa tu contraseña" id="exampleInputPassword1">
+                     <span class="input-group-text" onclick="Vista_form();" style="width: 45px; height: 38px;">
                          <i class="bi bi-eye" id="ver"></i>
                          <i class="bi bi-eye-slash" id="ocultar" style="display: none;"></i>
                      
@@ -82,19 +88,22 @@
                         
                  </div>
                  <?php if(isset($_POST["btningresar"]) && empty($_POST["password"])): ?>
-            <div class="text-danger">El campo de contraseña es obligatorio</div>
+            <div class="text-danger">Contraseña es obligatorio</div>
         <?php endif; ?>
-                 <a href="recpassword.php" id="ContraseñaHelp" class="form-text text-decoration-none">¿Has olvidado tu contraseña?</a>
+        <a href="recpassword.php" id="ContraseñaHelp" class="form-text  text-decoration-none forgotten-password">¿Has olvidado tu contraseña?</a>
+
              </div>
 
         
-                    <input name="btningresar"  type="submit" class="btn btn-outline-primary w-100" value="INICIAR SESION">
+                    <input name="btningresar"  type="submit" class="btn btn-primary w-100" value="INICIAR SESION">
                   </form>
             </div>
            </div>
            
      </div>
     </section>
+    </ul>
+    
 
     <script>
 
