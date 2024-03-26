@@ -56,7 +56,10 @@
             </div>
             <div class="px-lg-5 py-lg-4 p-4 w-100 mb-auto align-self-center">
                 <h1 class="front-weight-bold mb-4 " > Reestablecer Contraseña</h1>
-                <form >
+                <form method = "post">
+                <?php 
+                include "controlador/recuperacion.php";
+                ?>
                     <div class="mb-4">
                         <p>Introduce la direccion de correo que usaste en el registro.Te enviaremos
                             un correo donde puedas tener una nueva contraseña
@@ -65,11 +68,11 @@
         
                     <div class="mb-4">
                       <label for="exampleInputEmail1" class="form-label  front-weight-bold">Email</label>
-                      <input type="email" class="form-control bg-dark-x border-0" placeholder="Ingresa tu email"id="exampleInputEmail1" aria-describedby="emailHelp">
+                      <input type="email" name="correoconf" class="form-control bg-dark-x border-0" placeholder="Ingresa tu email"id="exampleInputEmail1" aria-describedby="emailHelp">
                      
                     </div>
                     <div class="d-flex justify-content-between">
-                        <div class="flex-grow-1 me-2"> 
+                        <div class="flex-grow-1 me-2" accion="controlador/recuperacion.php"> 
                             <button type="submit" class="btn btn-outline-success w-100">Enviar</button>
                         </div>
                         <div class="flex-grow-1 ms-2">
