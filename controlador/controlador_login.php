@@ -17,6 +17,7 @@
     $user = "postgres";//nombre del usuario
     $pass = "4568";//contrasenia de la base de datos
     $conn = pg_connect("host=$host  dbname=$bd  user=$user  password=$pass");//conecciona la base de datoscon los datos anteriormente mencionados
+    return $conn;
   }
 
 
@@ -30,19 +31,19 @@ function consul_correo_admin(){
   $correo = $_POST['correo'];
   $contra = $_POST['password'];
   $query = "SELECT id_usuario , pasword FROM administrador WHERE correo = '$correo';";
-  
+  $contraBD = '';
   $consultaadminisitrador = pg_query(Conneccion(), $query);
   if($consultaadminisitrador){
     while ($fila = pg_fetch_assoc($consultaadminisitrador)) {
       $id_usuario = $fila['id_usuario'];
       $contraBD = $fila['pasword']; 
     }
-    if($contra == $contraBD){
+    if($contra==$contraBD){
       //ya puede iniciar secion
-      return TRUE;
+      return FALSE;
     }else{
       //no puede iniciar secion
-      return FALSE;
+      return TRUE;
     }
   }else {
     //no es un admin seria un docente

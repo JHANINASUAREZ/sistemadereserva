@@ -56,7 +56,7 @@
             </div>
             <div class="px-lg-5 py-lg-4 p-4 w-100 mb-auto align-self-center">
                 <h1 class="front-weight-bold mb-4 " > Reestablecer Contraseña</h1>
-                <form method = "post">
+                <form method = "post" accion="controlador/recuperacion.php">
                 <?php 
                 include "controlador/recuperacion.php";
                 ?>
