@@ -123,7 +123,7 @@
                         <img src="Img/logoFCyT.jpeg" class="img-fluid mx-auto mb-3" style="margin-bottom: 20px; border-radius: 10px;">
                         <h1 class="font-weight-bold mb-4" style="color: #03045E; font-size: 28px;">INICIAR SESIÓN</h1>
 
-                        <form action="/config/controlador_login.php" method="POST" onsubmit="return validarFormulario()" class="my-4">
+                        <form action="config/controlador_login.php" method="POST" onsubmit="return validarFormulario()" class="my-4">
 
                             <div class="mb-4">
                                 <label for="exampleInputEmail1" class="font-weight-bold" style="width: 400px;">Correo electrónico</label>
