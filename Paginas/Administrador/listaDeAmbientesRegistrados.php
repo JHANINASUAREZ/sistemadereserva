@@ -1,22 +1,30 @@
 <?php
-require_once '../../config/validacion_session.php';
-require_once '../../config/conexion.php';
+// Conexión a la base de datos
 
-$correo = $_SESSION['user'];
+$host = "localhost";
+$dbname = "reservaumss"; 
+$username = "root"; 
+$password = ""; 
 
-$query = "SELECT nombre FROM usuarios WHERE correo = '$correo'";
-$result = $conexion->query($query);
-$row = $result->fetch_assoc();
-$nombreUsuario = $row['nombre'];
+
+try {
+    $conexion = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch(PDOException $e) {
+    echo "Error de conexión: " . $e->getMessage();
+}
+
+// Consultar la base de datos para obtener los ambientes registrados
+
+$stmt = $conexion->query("SELECT * FROM ambientes");
+$ambientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Lista de Ambientes Registrados</title>
     <link rel="stylesheet" href="../../css/style.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -24,33 +32,35 @@ $nombreUsuario = $row['nombre'];
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="listaDeAmbientesRegistrados.css">
 </head>
-
 <body>
 
+
         <header class="headerHU">
-            <div class="header-content">
-                <div class="header-logo" style="margin-right: 20px;">
-                    <img src="../../Img/logoFCyT.jpeg" alt="Logo" width="180" height="65">
-                </div>
-                <div class="vertical-line" style="border-left: 1px solid white; height: 40px; margin-left: 20px;"></div>
-                <span class="header-title" style="font-family: 'Courgette', cursive; color: white; margin-left: 60px;margin-right:100px;">SISTEMA DE RESERVA DE AULAS DE FCyT</span>
-                <div class="vertical-line" style="border-left: 1px solid white; height: 40px; margin-left: 60px;"></div>
-                <div class="header-links" style="display: flex; align-items: center;">
-                    <i class="bi bi-bell-fill" style="margin-left: 40px;"></i>
-                    <i class="bi bi-person-circle" style="margin-left: 50px;"></i>
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;margin-left:50px;">
-                    <?php echo $nombreUsuario; ?>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="../../config/controlador_cerrar_sesion.php">Cerar sesion</a></li>
-                    </ul>
-                </div>
-            </div>
+                    <div class="header-content">
+                        <div class="header-logo" style="margin-right: 20px;">
+                            <img src="../../Img/logoFCyT.jpeg" alt="Logo" width="180" height="65">
+                        </div>
+                        <div class="vertical-line" style="border-left: 1px solid white; height: 40px; margin-left: 20px;"></div>
+                        <span class="header-title" style="font-family: 'Courgette', cursive; color: white; margin-left: 60px;margin-right:100px;">SISTEMA DE RESERVA DE AULAS DE FCyT</span>
+                        <div class="vertical-line" style="border-left: 1px solid white; height: 40px; margin-left: 60px;"></div>
+                        <div class="header-links" style="display: flex; align-items: center;">
+                            <i class="bi bi-bell-fill" style="margin-left: 40px;"></i>
+                            <i class="bi bi-person-circle" style="margin-left: 50px;"></i>
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;margin-left:50px;">
+                            <! <?php echo $nombreUsuario; ?>>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="../../config/controlador_cerrar_sesion.php">Cerar sesion</a></li>
+                            </ul>
+                        </div>
+                    </div>
         </header>
-
-
     </body>
+
+
+    
     <div class="wrapper">
         <aside id="sidebar">
             <div class="d-flex">
@@ -124,36 +134,50 @@ $nombreUsuario = $row['nombre'];
                 </li>
             </ul>
         </aside>
+
+
         <div class="main p-3">
-            <div id="carouselExampleIndicators" class="carousel slide">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <div class="container text-center">
+                <h2 class="lista-title">LISTA DE AMBIENTES REGISTRADOS</h2>
+                <form action="accion.php" method="POST">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Capacidad</th>
+                                <th>Ubicación</th>
+                                <th>Periodo de Examen</th>
+                                <th>Fecha de Inicio</th>
+                                <th>Fecha de Fin</th>
+                                <th>Horario</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($ambientes as $ambiente): ?>
+                                <tr>
+                                
+                                    <td><img src="<?php echo $ambiente['imagen']; ?>" alt="Imagen del ambiente"></td>
+                                    <td><?php echo $ambiente['nombre']; ?></td>
+                                    <td><?php echo $ambiente['capacidad']; ?></td>
+                                    <td><?php echo $ambiente['ubicacion']; ?></td>
+                                    <td><?php echo $ambiente['periodo']; ?></td>
+                                    <td><?php echo $ambiente['fechaInicio']; ?></td>
+                                    <td><?php echo $ambiente['fechaFin']; ?></td>
+                                    <td><?php echo $ambiente['horario']; ?></td>
+                                    <td>
+                                        <a href='editarAmbiente.php?id=<?php echo $ambiente['id']; ?>' class='btn btn-primary'>Editar</a>
+                                        <a href='eliminarAmbiente.php?id=<?php echo $ambiente['id']; ?>' class='btn btn-danger'>Eliminar</a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="../../Img/Foto1.jpeg" class="d-block img-fluid w-100 " style="max-height: 90vh;">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="../../Img/Foto1.jpeg" class="d-block img-fluid w-100" style="max-height: 90vh;">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
-
         </div>
-    </div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="../../js/MenuLateral.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+        <script src="../../js/MenuLateral.js"></script>
 </body>
-
 </html>
