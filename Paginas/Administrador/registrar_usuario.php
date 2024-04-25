@@ -24,7 +24,6 @@ $nombreUsuario = $row['nombre'];
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    
 </head>
 
 <body>
@@ -62,11 +61,11 @@ $nombreUsuario = $row['nombre'];
             </div>
             <ul class="ul sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link" style="text-decoration: none;">
+                    <a href="HomeA.php" class="sidebar-link" style="text-decoration: none;">
                         <i class="bi bi-house-door-fill fs-4"></i>
                         <span>INICIO</span>
                     </a>
-                    </li>
+                </li>
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse" data-bs-target="#RegistrarA" aria-expanded="false" aria-controls="Registrar_ambiente" style="text-decoration: none;">
                     <img width="25" height="25" src="https://img.icons8.com/ios-filled/50/plus-2-math.png" alt="plus-2-math" style="filter: invert(100%);margin-right: 10px;"/>
@@ -82,7 +81,7 @@ $nombreUsuario = $row['nombre'];
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a href="./registrar_usuario.php" class="sidebar-link" style="text-decoration: none;">
+                    <a href="#" class="sidebar-link" style="text-decoration: none;">
                         <img width="25" height="25" src="https://img.icons8.com/ios-filled/50/add-user-male.png" alt="useregistro" style="filter: invert(100%);margin-right: 10px;" />
                         <span>REGISTRAR USUARIO</span>
                     </a>
@@ -118,38 +117,121 @@ $nombreUsuario = $row['nombre'];
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a href="modificar_usuario.php" class="sidebar-link" style="text-decoration: none;">
+                    <a href="#" class="sidebar-link" style="text-decoration: none;">
                         <img width="25" height="25" src="https://img.icons8.com/fluency-systems-filled/48/edit-user.png" alt="USERMODIFICAR" style="filter: invert(100%);margin-right: 10px;" />
                         <span>MODIFICAR CUENTA DE USUARIO</span>
                     </a>
                 </li>
             </ul>
         </aside>
-        <div class="main p-3">
-            <div id="carouselExampleIndicators" class="carousel slide">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                </div>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="../../Img/Foto1.jpeg" class="d-block img-fluid w-100 " style="max-height: 90vh;">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="../../Img/Foto1.jpeg" class="d-block img-fluid w-100" style="max-height: 90vh;">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
 
+        <title>Registrar Usuario</title>
+<link rel="stylesheet" type="text/css" href="../cssp/styles.css">
+<script>
+function enviarFormulario() {
+    // Obtener el formulario
+    var formulario = document.getElementById("formularioRegistro");
+    var contrasena = document.getElementById("contrasena").value;
+    var confirmarContrasena = document.getElementById("confirmar_contrasena").value;
+    if (contrasena !== confirmarContrasena) {
+        alert("Las contraseñas no coinciden. Por favor, intenta de nuevo.");
+        return;
+    }
+    // Enviar el formulario utilizando AJAX
+    var xhr = new XMLHttpRequest();
+    xhr.open(formulario.method, formulario.action, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onload = function() {
+        if (xhr.status === 200) {
+            // Si la respuesta es exitosa, mostrar el mensaje en una ventana emergente
+            var respuesta = xhr.responseText;
+            mostrarVentanaEmergente(respuesta);
+            // Borrar los datos del formulario
+            formulario.reset();
+            // Aumentar el tamaño del cuerpo
+            document.body.style.fontSize = "20px";
+        } else {
+            // Si hay un error en la respuesta, mostrar un mensaje de error
+            alert('Error al registrar usuario: ' + xhr.statusText);
+        }
+    };
+
+    xhr.send(new URLSearchParams(new FormData(formulario)))
+}
+
+function mostrarVentanaEmergente(mensaje) {
+    // Crear la ventana emergente
+    var ventanaEmergente = document.createElement('div');
+    ventanaEmergente.classList.add('ventana-emergente');
+
+    // Crear el contenido de la ventana emergente
+    var contenido = document.createElement('div');
+    contenido.classList.add('contenido');
+    contenido.innerHTML = mensaje;
+
+    // Crear el botón para cerrar la ventana emergente
+    var botonCerrar = document.createElement('button');
+    botonCerrar.textContent = 'Aceptar';
+    botonCerrar.addEventListener('click', function() {
+        // Cerrar la ventana emergente al hacer clic en el botón
+        document.body.removeChild(ventanaEmergente);
+    });
+
+    // Agregar el contenido y el botón a la ventana emergente
+    ventanaEmergente.appendChild(contenido);
+    ventanaEmergente.appendChild(botonCerrar);
+
+    // Agregar la ventana emergente al cuerpo del documento
+    document.body.appendChild(ventanaEmergente);
+}
+function togglePasswordVisibility(inputId) {
+    var input = document.getElementById(inputId);
+    var icon = document.getElementById('toggle' + inputId.charAt(0).toUpperCase() + inputId.slice(1) + 'Icon');
+
+    if (input.type === "password") {
+        input.type = "text";
+        icon.textContent = " 👁️‍🗨️";
+    } else {
+        input.type = "password";
+        icon.textContent = "🔒";
+    }
+}
+
+
+</script>
+</head>
+<body>
+
+        <div class="main p-3">
+            <div class="container">
+                <h2>Registrar Usuario</h2>
+                <!-- Agregar el identificador al formulario y llamar a la función JavaScript al hacer clic en el botón Registrar -->
+                <form id="formularioRegistro" method="post" action="../../config/procesar_registro.php" onsubmit="event.preventDefault(); enviarFormulario();">
+                    <input type="text" name="nombre" placeholder="Nombres" required>
+                    <input type="text" name="apellido" placeholder="Apellidos" required>
+                    <input type="email" name="correo" placeholder="Correo electrónico" required>
+
+                    <input type="password" name="contrasena" id="contrasena" placeholder="Contraseña" required>
+                    <span class="toggle-password" onclick="togglePasswordVisibility('contrasena')">
+                        <i id="togglePasswordIcon"> 👁️‍🗨️</i> 
+                    </span>
+                    <input type="password" name="confirmar_contrasena" id="confirmar_contrasena" placeholder="Confirmar Contraseña" required>
+                    <span class="toggle-password" onclick="togglePasswordVisibility('confirmar_contrasena')">
+                        <i id="toggleConfirmPasswordIcon"> 👁️‍🗨️</i>
+                    </span>
+
+                    <input type="text" name="materias" placeholder="Materias" required> 
+                    <input type="text" name="carrera" placeholder="Carrera" required>
+                    <select name="rol" required>
+                        <option value="1">Administrador</option>
+                        <option value="2">Docente</option>
+                    </select>
+                    <button type="submit">Registrar</button>
+                    <button type="button" onclick="window.location.href='./HomeA.php'">Cancelar</button>
+                </form>
+            </div>
         </div>
+    </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
