@@ -159,6 +159,7 @@ $nombreUsuario = $row['nombre'];
                                 <th>Nombre</th>
                                 <th>Capacidad</th>
                                 <th>Ubicación</th>
+                                <th>Piso</th>
                                 <th>Periodo de Examen</th>
                                 <th>Fecha de Inicio</th>
                                 <th>Fecha de Fin</th>
@@ -173,7 +174,7 @@ $nombreUsuario = $row['nombre'];
                                 <tr>
 
                                 
-                                <td><img src="../../Img/Ambientes<?php echo $ambientes[8]; ?>" alt="" width="100"></td>
+                                <td><img src="../../Img/Ambientes<?php echo $ambientes[9]; ?>" alt="" width="100"></td>
                                     <td><?php echo $ambientes[1]; ?></td>
                                     <td><?php echo $ambientes[2]; ?></td>
                                     <td><?php echo $ambientes[3]; ?></td>
@@ -181,9 +182,11 @@ $nombreUsuario = $row['nombre'];
                                     <td><?php echo $ambientes[5]; ?></td>
                                     <td><?php echo $ambientes[6]; ?></td>
                                     <td><?php echo $ambientes[7]; ?></td>
+                                    <td><?php echo $ambientes[8]; ?></td>
+                                    
                                     <td>
-                                        <a href='editarAmbiente.php?id=<?php echo $ambiente['id']; ?>' class='btn btn-primary'>Editar</a>
-                                        <a href='eliminarAmbiente.php?id=<?php echo $ambiente['id']; ?>' class='btn btn-danger'>Eliminar</a>
+                                        <a href='editarAmbiente.php?id=<?php echo $ambientes['id']; ?>' class='btn btn-primary'>Editar</a>
+                                        <a href='eliminarAmbiente.php?id=<?php echo $ambientes['id']; ?>' class='btn btn-danger'>Eliminar</a>
                                     </td>
                                 </tr>
                             <?php 

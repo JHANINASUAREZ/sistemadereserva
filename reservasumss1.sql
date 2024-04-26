@@ -119,6 +119,21 @@ INSERT INTO `usuarios` (`id`, `correo`, `contrasena`, `nombre`, `rol_id`, `apell
 --
 ALTER TABLE `ambientes`
   ADD PRIMARY KEY (`id`);
+COMMIT;
+
+DELETE FROM ambientes WHERE id = id;
+
+-- Consulta para actualizar los detalles de un ambiente por su ID
+UPDATE ambientes SET
+    nombre = 'Nuevo Nombre',
+    ubicacion = 'Nueva Ubicación',
+    capacidad= `capacidad`,
+    periodo = 'Nuevo Período de Examen',
+    fechaInicio = 'Nueva Fecha de Inicio',
+    fechaFin = 'Nueva Fecha de Fin',
+    horario = 'Nuevo Horario',
+    imagen = 'Nueva Imagen'
+WHERE id = id;
 
 --
 -- Indices de la tabla `roles`

@@ -23,18 +23,20 @@ $ambiente = $stmt->fetch(PDO::FETCH_ASSOC);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Procesar los datos del formulario y actualizar el registro en la base de datos
     $nombre = $_POST['nombre'];
-    $ubicacion = $_POST['ubicacion'];
     $capacidad = $_POST['capacidad'];
+    $ubicacion = $_POST['ubicacion'];
+    $piso = $_POST['piso'];
     $periodo = $_POST['periodo'];
     $fechaInicio = $_POST['fechaInicio'];
     $fechaFin = $_POST['fechaFin'];
     $horario = $_POST['horario'];
 
     // Actualizar el registro en la base de datos
-    $stmt = $conexion->prepare("UPDATE ambientes SET nombre = :nombre, capacidad = :capacidad, ubicacion = :ubicacion, periodo = :periodo, fechaInicio = :fechaInicio, fechaFin = :fechaFin, horario = :horario WHERE id = :id");
+    $stmt = $conexion->prepare("UPDATE ambientes SET nombre = :nombre, capacidad = :capacidad, ubicacion = :ubicacion, piso= :piso, periodo = :periodo, fechaInicio = :fechaInicio, fechaFin = :fechaFin, horario = :horario WHERE id = :id");
     $stmt->bindParam(":nombre", $nombre);
     $stmt->bindParam(":capacidad", $capacidad);
     $stmt->bindParam(":ubicacion", $ubicacion);
+    $stmt->bindParam(":piso", $piso);
     $stmt->bindParam(":periodo", $periodo);
     $stmt->bindParam(":fechaInicio", $fechaInicio);
     $stmt->bindParam(":fechaFin", $fechaFin);
@@ -42,8 +44,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bindParam(":id", $id);
     $stmt->execute();
 
-    header("Location: listaDeAmbientesRegistrados.php");
-    exit();    
+    echo "<script>
+            alert('¡Ambiente editado! Los cambios han sido guardados exitosamente.');
+            window.location.href = 'listaDeAmbientesRegistrados.php'; // Redirigir a la lista de ambientes
+          </script>";
+    exit(); 
+    
 }
 ?>
 
@@ -62,6 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.3/css/bootstrap.min.css">
     <link rel="stylesheet" href="editarAmbiente.css">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    
     <style>
         
         .container {
@@ -72,6 +80,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
         .btn-primary {
             margin-top: 20px; 
+        }
+        .scroll-container {
+            max-height: 70vh; 
+            overflow-y: auto;
         }
     </style>
 </head>
@@ -178,66 +190,73 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <div class="main p-3">
     <h2>Editar Ambiente</h2>
-    <div class="form-container">
-        <form action="" method="post">
-        <div class="form-row">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" value="<?php echo $ambiente['nombre']; ?>">
-        </div>
+    <div class="scroll-container">
+        <div class="form-container">
+            <form action="" method="post">
+            <div class="form-row">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" value="<?php echo $ambiente['nombre']; ?>">
+            </div>
 
-        <div class="form-row">
-            <label for="capacidad">Capacidad:</label>
-            <input type="text" id="capacidad" name="capacidad" value="<?php echo $ambiente['capacidad']; ?>">
-        </div>
-        
-        <div class="form-row">
-            <label for="ubicacion">Ubicación:</label>
-            <input type="text" id="ubicacion" name="ubicacion" value="<?php echo $ambiente['ubicacion']; ?>">
-        </div>
-        
-        <div class="form-row">
-            <label for="periodo">Periodo de examen:</label>
-            <select id="periodo" name="periodo">
-                <option value="primer parcial" <?php if($ambiente['periodo'] == 'primer parcial') echo 'selected'; ?>>Primer Parcial</option>
-                <option value="segundo parcial" <?php if($ambiente['periodo'] == 'segundo parcial') echo 'selected'; ?>>Segundo Parcial</option>
-                <option value="tercer parcial" <?php if($ambiente['periodo'] == 'tercer parcial') echo 'selected'; ?>>Examen Final</option>
-                
-            </select>
-        </div>
-        
-        
-        <div class="form-row">
-            <label for="fechaInicio">Fecha de inicio:</label>
-            <input type="date" id="fechaInicio" name="fechaInicio" value="<?php echo $ambiente['fechaInicio']; ?>">
-        </div>
-        
-        <div class="form-row">
-            <label for="fechaFin">Fecha de fin:</label>
-            <input type="date" id="fechaFin" name="fechaFin" value="<?php echo $ambiente['fechaFin']; ?>">
-        </div>
-        
-        <div class="form-row">
-            <label for="horario">Horario:</label>
-            <select id="horario" name="horario">
-            <option value="06:45">06:45</option>
-                            <option value="08:15">08:15</option>
-                            <option value="tercero">09:45</option>
-                            <option value="cuarto">11:15</option>
-                            <option value="quinto">12:45</option>
-                            <option value="sexto">14:15</option>
-                            <option value="septimo">15:45</option>
-                            <option value="octavo">17:15</option>
-                            <option value="noveno">18:45</option>
-                            <option value="decimo">20:15</option>
+            <div class="form-row">
+                <label for="capacidad">Capacidad:</label>
+                <input type="text" id="capacidad" name="capacidad" value="<?php echo $ambiente['capacidad']; ?>">
+            </div>
+            
+            <div class="form-row">
+                <label for="ubicacion">Ubicación:</label>
+                <input type="text" id="ubicacion" name="ubicacion" value="<?php echo $ambiente['ubicacion']; ?>">
+            </div>
 
-            </select>
-        </div>
+            <div class="form-row">
+                <label for="piso">Piso:</label>
+                <input type="text" id="piso" name="piso" value="<?php echo $ambiente['piso']; ?>">
+            </div>
+            
+            <div class="form-row">
+                <label for="periodo">Periodo de examen:</label>
+                <select id="periodo" name="periodo">
+                    <option value="primer parcial" <?php if($ambiente['periodo'] == 'primer parcial') echo 'selected'; ?>>Primer Parcial</option>
+                    <option value="segundo parcial" <?php if($ambiente['periodo'] == 'segundo parcial') echo 'selected'; ?>>Segundo Parcial</option>
+                    <option value="tercer parcial" <?php if($ambiente['periodo'] == 'tercer parcial') echo 'selected'; ?>>Examen Final</option>
+                    
+                </select>
+            </div>
         
-        <div class="form-row"> 
+        
+            <div class="form-row">
+                <label for="fechaInicio">Fecha de inicio:</label>
+                <input type="date" id="fechaInicio" name="fechaInicio" value="<?php echo $ambiente['fechaInicio']; ?>">
+            </div>
+            
+            <div class="form-row">
+                <label for="fechaFin">Fecha de fin:</label>
+                <input type="date" id="fechaFin" name="fechaFin" value="<?php echo $ambiente['fechaFin']; ?>">
+            </div>
+            
+            <div class="form-row">
+                <label for="horario">Horario:</label>
+                <select id="horario" name="horario">
+                                <option value="06:45">06:45</option>
+                                <option value="08:15">08:15</option>
+                                <option value="09:45">09:45</option>
+                                <option value="11:15">11:15</option>
+                                <option value="12:45">12:45</option>
+                                <option value="14:15">14:15</option>
+                                <option value="15:45">15:45</option>
+                                <option value="17:15">17:15</option>
+                                <option value="18:45">18:45</option>
+                                <option value="20:15">20:15</option>
 
-            <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-        </div>
-    </form>
+                </select>
+            </div>
+        
+            <div class="form-row"> 
+
+                <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+            </div>
+        </form>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="../../js/MenuLateral.js"></script>

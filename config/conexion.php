@@ -2,7 +2,7 @@
  $host = "localhost";
  $user = "root";
  $password="";
- $db = "reservaumss";
+ $db = "reservasumss1";
 
  $conexion= new mysqli($host,$user,$password,$db);
 
