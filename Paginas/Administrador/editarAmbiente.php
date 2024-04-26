@@ -195,12 +195,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form action="" method="post">
             <div class="form-row">
                 <label for="nombre">Nombre:</label>
-                <input type="text" id="nombre" name="nombre" value="<?php echo $ambiente['nombre']; ?>">
+                <span><input type="text" id="nombre" name="nombre" value="<?php echo $ambiente['nombre']; ?>"disabled>
             </div>
 
             <div class="form-row">
                 <label for="capacidad">Capacidad:</label>
-                <input type="text" id="capacidad" name="capacidad" value="<?php echo $ambiente['capacidad']; ?>">
+                <input type="text" id="capacidad" name="capacidad" value="<?php echo $ambiente['capacidad']; ?>"disabled>
             </div>
             
             <div class="form-row">
@@ -236,17 +236,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
             <div class="form-row">
                 <label for="horario">Horario:</label>
-                <select id="horario" name="horario">
-                                <option value="06:45">06:45</option>
-                                <option value="08:15">08:15</option>
-                                <option value="09:45">09:45</option>
-                                <option value="11:15">11:15</option>
-                                <option value="12:45">12:45</option>
-                                <option value="14:15">14:15</option>
-                                <option value="15:45">15:45</option>
-                                <option value="17:15">17:15</option>
-                                <option value="18:45">18:45</option>
-                                <option value="20:15">20:15</option>
+                <select id="horario" name="horario[]" multiple>
+                                
+                    <option value="06:45">06:45</option>
+                    <option value="08:15">08:15</option>
+                    <option value="09:45">09:45</option>
+                    <option value="11:15">11:15</option>
+                    <option value="12:45">12:45</option>
+                    <option value="14:15">14:15</option>
+                    <option value="15:45">15:45</option>
+                    <option value="17:15">17:15</option>
+                    <option value="18:45">18:45</option>
+                    <option value="20:15">20:15</option>
 
                 </select>
             </div>
