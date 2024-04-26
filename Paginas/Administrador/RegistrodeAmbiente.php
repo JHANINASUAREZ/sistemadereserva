@@ -30,7 +30,18 @@ $nombreUsuario = $row['nombre'];
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="registrar_ambientes.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        /* Estilo para el contenedor de los botones */
+        .form-botones {
+            width: 10%; /* Ancho deseado del contenedor */
+            margin: auto; /* Centrar el contenedor */
+        }
 
+        /* Estilo para los botones */
+        .form-botones button {
+            width: 125%; /* Los botones ocuparán todo el ancho del contenedor */
+        }
+    </style>
 </head>
 
 <body>
@@ -208,25 +219,24 @@ $nombreUsuario = $row['nombre'];
                         <label for="fechaFin">Fecha de fin</label>
                         <input type="date" class="form-control" id="fechaFin" name="fechaFin" required>
                     </div>
-                    </div>
+                </div>
                     
                 </div>               
                     <label for="horarios">Horarios Disponibles</label>
                 
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#nuevoModalHorarios">Seleccionar Horarios</button>
-                    </div>     
+                </div>     
                     <div class="form-imagen">
                     <label for="imagen">Seleccionar Imagen </label>
                     <input type="file" class="form-control-file" name="imgAmbiente">
                 </div>
-
+            
                 <div class="form-botones">
                     <button type="submit" class="btn btn-success">Guardar</button>
                     <button type="button" onclick="window.location.href='./HomeA.php'">Cancelar</button>
                 </div>
-            </div>
-        </form>
-    </section>
+            
+                
 
 <!--
     FIN NUEVO FORMULARIO

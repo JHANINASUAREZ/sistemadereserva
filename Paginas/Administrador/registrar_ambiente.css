@@ -369,11 +369,11 @@ form h2 {
 }
 
 .form-botones button {
-    height: 35px;
+    height: 30px;
     background-color: #210278;
     color: #ffffff;
     margin-top: 5px;
-    font-size: 18px;
+    font-size: 14px;
     font-weight: bold;
     border: none;
     border-radius: 5px;
