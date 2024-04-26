@@ -166,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link" style="text-decoration: none;">
+                <a href="modificar_usuario.php" class="sidebar-link" style="text-decoration: none;">
                     <img width="25" height="25" src="https://img.icons8.com/fluency-systems-filled/48/edit-user.png" alt="USERMODIFICAR" style="filter: invert(100%);margin-right: 10px;" />
                     <span>MODIFICAR CUENTA DE USUARIO</span>
                 </a>

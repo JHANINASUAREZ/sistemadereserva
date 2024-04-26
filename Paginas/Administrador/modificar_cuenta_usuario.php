@@ -3,14 +3,13 @@ require_once '../../config/validacion_session.php';
 require_once '../../config/conexion.php';
 
 $correo = $_SESSION['user'];
-
 $query = "SELECT nombre FROM usuarios WHERE correo = '$correo'";
 $result = $conexion->query($query);
+
 $row = $result->fetch_assoc();
 $nombreUsuario = $row['nombre'];
-
-
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,14 +18,13 @@ $nombreUsuario = $row['nombre'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/m_cuenta_usuario.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
-    
 </head>
 
 <body>
@@ -46,7 +44,7 @@ $nombreUsuario = $row['nombre'];
                     <?php echo $nombreUsuario; ?>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="../../config/controlador_cerrar_sesion.php">Cerrar sesion</a></li>
+                        <li><a class="dropdown-item" href="../../config/controlador_cerrar_sesion.php">Cerar sesion</a></li>
                     </ul>
                 </div>
             </div>
@@ -64,11 +62,11 @@ $nombreUsuario = $row['nombre'];
             </div>
             <ul class="ul sidebar-nav">
                 <li class="sidebar-item">
-                    <a href="#" class="sidebar-link" style="text-decoration: none;">
+                    <a href="HomeA.php" class="sidebar-link" style="text-decoration: none;">
                         <i class="bi bi-house-door-fill fs-4"></i>
                         <span>INICIO</span>
                     </a>
-                    </li>
+                </li>
                 <li class="sidebar-item">
                     <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse" data-bs-target="#RegistrarA" aria-expanded="false" aria-controls="Registrar_ambiente" style="text-decoration: none;">
                     <img width="25" height="25" src="https://img.icons8.com/ios-filled/50/plus-2-math.png" alt="plus-2-math" style="filter: invert(100%);margin-right: 10px;"/>
@@ -119,7 +117,7 @@ $nombreUsuario = $row['nombre'];
                         <span>CALENDARIO</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
+                <li class="sidebar-item_modificar">
                     <a href="modificar_usuario.php" class="sidebar-link" style="text-decoration: none;">
                         <img width="25" height="25" src="https://img.icons8.com/fluency-systems-filled/48/edit-user.png" alt="USERMODIFICAR" style="filter: invert(100%);margin-right: 10px;" />
                         <span>MODIFICAR CUENTA DE USUARIO</span>
@@ -127,36 +125,62 @@ $nombreUsuario = $row['nombre'];
                 </li>
             </ul>
         </aside>
-        <div class="main p-3">
-            <div id="carouselExampleIndicators" class="carousel slide">
-                <div class="carousel-indicators">
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                </div>
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="../../Img/Foto1.jpeg" class="d-block img-fluid w-100 " style="max-height: 90vh;">
+
+
+
+
+
+
+
+
+        
+        <div class="main p-3"> 
+        
+        <div class="container mt-5" >
+        
+                    <div class="row justify-content-center" action="config/funcion_modificar_usuario.php">
+                        <div class="col-md-8 bg-primary p-4 rounded shadow">
+                        <h3 class="text-center text-white">Formulario de Modificar Usuario</h3>
+                        <form metod="POST" acction="../../config/funcion_modificar_usuario.php?ci_mo='$_GET['ci_new']'">
+                            <?php
+                                include('../../config/obtener_usuario_modificar.php');
+                                print_r($_GET);
+                                $ci_new=$_GET['ci_new'];
+                                
+                                $nombre_modificar = obtener_nombre($ci_new);
+                                $apellido_modificar = obtener_apellido($ci_new);
+                                $ci_modificar = obtener_correo($ci_new);
+
+                            ?>
+                            
+                            <div class="row mb-3">
+                                                               
+                            <div class="col-md-6">
+                                <label for="nombre" class="form-label text-white">Nombre:</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" placeholder=<?php echo $nombre_modificar?>>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <label for="apellido" class="form-label text-white">Apellido:</label>
+                                <input type="text" class="form-control" id="apellido" name="apellido" placeholder=<?php echo $apellido_modificar?>>
+                            </div>
+                            </div>
+                            <div class="mb-3">
+                            <label for="facultad" class="form-label text-white">Facultad:</label>
+                            <input type="text" class="form-control" id="facultad" name="facultad" placeholder=<?php echo $ci_modificar?>>
+                            </div>
+                            <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary" id="b_boton" name="b_boton">GUARDAR</button>
+                            <a href="modificar_usuario.php" class="btn btn-primary">CANCELAR</a>
+                            </div>
+                            
+                        </form>
+                        </div>
                     </div>
-                    <div class="carousel-item">
-                        <img src="../../Img/Foto1.jpeg" class="d-block img-fluid w-100" style="max-height: 90vh;">
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
+                    </div>  
 
         </div>
     </div>
-    <body>
-    
-
-</body>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
