@@ -1,7 +1,7 @@
 <?php
 // Conexión a la base de datos
 $host = "localhost"; 
-$dbname = "reservaumss"; 
+$dbname = "reservasumss1"; 
 $username = "root"; 
 $password = ""; 
 try {

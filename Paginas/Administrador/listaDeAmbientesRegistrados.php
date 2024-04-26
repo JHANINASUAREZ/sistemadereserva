@@ -2,7 +2,7 @@
 // Conexión a la base de datos
 
 $host = "localhost";
-$dbname = "reservaumss"; 
+$dbname = "reservasumss1"; 
 $username = "root"; 
 $password = ""; 
 
@@ -18,6 +18,17 @@ try {
 
 $stmt = $conexion->query("SELECT * FROM ambientes");
 $ambientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+require_once '../../config/validacion_session.php';
+require_once '../../config/conexion.php';
+
+$correo = $_SESSION['user'];
+
+$query = "SELECT nombre FROM usuarios WHERE correo = '$correo'";
+$result = $conexion->query($query);
+$row = $result->fetch_assoc();
+$nombreUsuario = $row['nombre'];
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,7 +60,7 @@ $ambientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <i class="bi bi-bell-fill" style="margin-left: 40px;"></i>
                             <i class="bi bi-person-circle" style="margin-left: 50px;"></i>
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color: white;margin-left:50px;">
-                            <! <?php echo $nombreUsuario; ?>>
+                            <?php echo $nombreUsuario; ?>
                             </a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="../../config/controlador_cerrar_sesion.php">Cerar sesion</a></li>
@@ -137,7 +148,8 @@ $ambientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
         <div class="main p-3">
-            <div class="container text-center">
+        <div class="container text-center" style="height: 400px; overflow-y: auto;">
+            <table class="table table-striped">
                 <h2 class="lista-title">LISTA DE AMBIENTES REGISTRADOS</h2>
                 <form action="accion.php" method="POST">
                     <table class="table table-striped">
@@ -155,23 +167,28 @@ $ambientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($ambientes as $ambiente): ?>
+                            <?php $ambientes_sql=mysqli_query($conexion,"Select * from ambientes");
+                            while ($ambientes=mysqli_fetch_array($ambientes_sql)){
+                                ?>    
                                 <tr>
+
                                 
-                                    <td><img src="<?php echo $ambiente['imagen']; ?>" alt="Imagen del ambiente"></td>
-                                    <td><?php echo $ambiente['nombre']; ?></td>
-                                    <td><?php echo $ambiente['capacidad']; ?></td>
-                                    <td><?php echo $ambiente['ubicacion']; ?></td>
-                                    <td><?php echo $ambiente['periodo']; ?></td>
-                                    <td><?php echo $ambiente['fechaInicio']; ?></td>
-                                    <td><?php echo $ambiente['fechaFin']; ?></td>
-                                    <td><?php echo $ambiente['horario']; ?></td>
+                                <td><img src="../../Img/Ambientes<?php echo $ambientes[8]; ?>" alt="" width="100"></td>
+                                    <td><?php echo $ambientes[1]; ?></td>
+                                    <td><?php echo $ambientes[2]; ?></td>
+                                    <td><?php echo $ambientes[3]; ?></td>
+                                    <td><?php echo $ambientes[4]; ?></td>
+                                    <td><?php echo $ambientes[5]; ?></td>
+                                    <td><?php echo $ambientes[6]; ?></td>
+                                    <td><?php echo $ambientes[7]; ?></td>
                                     <td>
                                         <a href='editarAmbiente.php?id=<?php echo $ambiente['id']; ?>' class='btn btn-primary'>Editar</a>
                                         <a href='eliminarAmbiente.php?id=<?php echo $ambiente['id']; ?>' class='btn btn-danger'>Eliminar</a>
                                     </td>
                                 </tr>
-                            <?php endforeach; ?>
+                            <?php 
+                            }
+                            ?>
                         </tbody>
                     </table>
                 </div>

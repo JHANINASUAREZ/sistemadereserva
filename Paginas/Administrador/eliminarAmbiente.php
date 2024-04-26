@@ -24,7 +24,7 @@
 
 <?php
 $host = "localhost"; 
-$dbname = "reservaumss"; 
+$dbname = "reservasumss1"; 
 $username = "root"; 
 $password = ""; 
 
