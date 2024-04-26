@@ -32,9 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $horario = $_POST['horario'];
 
     // Actualizar el registro en la base de datos
-    $stmt = $conexion->prepare("UPDATE ambientes SET nombre = :nombre, capacidad = :capacidad, ubicacion = :ubicacion, piso= :piso, periodo = :periodo, fechaInicio = :fechaInicio, fechaFin = :fechaFin, horario = :horario WHERE id = :id");
-    $stmt->bindParam(":nombre", $nombre);
-    $stmt->bindParam(":capacidad", $capacidad);
+    $stmt = $conexion->prepare("UPDATE ambientes SET ubicacion = :ubicacion, piso= :piso, periodo = :periodo, fechaInicio = :fechaInicio, fechaFin = :fechaFin, horario = :horario WHERE id = :id");
     $stmt->bindParam(":ubicacion", $ubicacion);
     $stmt->bindParam(":piso", $piso);
     $stmt->bindParam(":periodo", $periodo);
@@ -195,12 +193,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form action="" method="post">
             <div class="form-row">
                 <label for="nombre">Nombre:</label>
-                <span><input type="text" id="nombre" name="nombre" value="<?php echo $ambiente['nombre']; ?>"disabled>
+                <span><input type="text" id="nombre" name="nombre" value="<?php echo $ambiente['nombre']; ?>"readonly>
             </div>
 
             <div class="form-row">
                 <label for="capacidad">Capacidad:</label>
-                <input type="text" id="capacidad" name="capacidad" value="<?php echo $ambiente['capacidad']; ?>"disabled>
+                <input type="text" id="capacidad" name="capacidad" value="<?php echo $ambiente['capacidad']; ?>"readonly>
             </div>
             
             <div class="form-row">
