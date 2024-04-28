@@ -48,6 +48,8 @@ $nombreUsuario = $row['nombre'];
                     </ul>
                 </div>
             </div>
+            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
         </header>
 
 
@@ -82,7 +84,7 @@ $nombreUsuario = $row['nombre'];
                     </ul>
                 </li>
                 <li class="sidebar-item">
-                    <a href="./registrar_usuario.php" class="sidebar-link" style="text-decoration: none;">
+                    <a href="registrar_usuario.php" class="sidebar-link" style="text-decoration: none;">
                         <img width="25" height="25" src="https://img.icons8.com/ios-filled/50/add-user-male.png" alt="useregistro" style="filter: invert(100%);margin-right: 10px;" />
                         <span>REGISTRAR USUARIO</span>
                     </a>
@@ -138,19 +140,60 @@ $nombreUsuario = $row['nombre'];
         
         <div class="container mt-5" >
         
-                    <div class="row justify-content-center" action="config/funcion_modificar_usuario.php">
-                        <div class="col-md-8 bg-primary p-4 rounded shadow">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8  p-4 rounded shadow" style="background-color: #6372FF;">
                         <h3 class="text-center text-white">Formulario de Modificar Usuario</h3>
-                        <form metod="POST" acction="../../config/funcion_modificar_usuario.php?ci_mo='$_GET['ci_new']'">
+                        
+                        <form method="POST" action="">
+                        
                             <?php
                                 include('../../config/obtener_usuario_modificar.php');
-                                print_r($_GET);
-                                $ci_new=$_GET['ci_new'];
                                 
-                                $nombre_modificar = obtener_nombre($ci_new);
-                                $apellido_modificar = obtener_apellido($ci_new);
-                                $ci_modificar = obtener_correo($ci_new);
-
+                                    $ci_new = isset($_GET['ci_new']) ? $_GET['ci_new'] : null;
+                                    
+                                    $nombre_modificar = obtener_nombre($ci_new);
+                                    $apellido_modificar = obtener_apellido($ci_new);
+                                    $ci_modificar = obtener_correo($ci_new);
+                                    
+                                    if($_SERVER["REQUEST_METHOD"] == "POST"){
+                                        if (!empty($_POST['nombre']) && !empty($_POST['apellido']) ) { 
+                                            $nombre = $_POST['nombre'];
+                                            $apellido = $_POST['apellido'];
+                                                                        
+                                            // Realiza la actualización en la base de datos
+                                            $sql = "UPDATE usuarios SET nombre='$nombre', apellido='$apellido' WHERE ci='$ci_new'";
+                                            
+                                            $conexion = new mysqli('localhost', 'root', '', 'reservasumss1');
+                                            // Ejecuta la consulta
+                                            if (mysqli_query($conexion, $sql)) {
+                                                // Redirige a la página de modificación con el parámetro ci_new
+                                                
+                                                 // ¡Importante! Asegúrate de salir del script después de la redirección.
+                                                 
+                                                echo '<script>
+                                                        Swal.fire({
+                                                            icon: "success",
+                                                            title: "Éxito",
+                                                            text: "Usuario actualizado con éxito.",
+                                                            didClose: () => {
+                                                                window.location.href = "modificar_cuenta_usuario.php?ci_new='.$ci_new.'";
+                                                            }
+                                                        });
+                                                    </script>';
+                 
+                                            } else {
+                                                echo "<p>Error al actualizar el usuario: " . mysqli_error($conexion) . "</p>";
+                                            }  
+                                        }else{
+                                            echo   '<script>
+                                                        Swal.fire({
+                                                            icon: "error",
+                                                            title: "Error",
+                                                            text: "Por favor, complete todos los campos."
+                                                        });
+                                                    </script>';
+                                        }                            
+                                    }
                             ?>
                             
                             <div class="row mb-3">
@@ -164,15 +207,20 @@ $nombreUsuario = $row['nombre'];
                                 <label for="apellido" class="form-label text-white">Apellido:</label>
                                 <input type="text" class="form-control" id="apellido" name="apellido" placeholder=<?php echo $apellido_modificar?>>
                             </div>
+                            <div class="mb-3">
+                            <label for="Materia" class="form-label text-white">Materia:</label>
+                            <input type="text" class="form-control" placeholder= "Programacion 1">
                             </div>
                             <div class="mb-3">
-                            <label for="facultad" class="form-label text-white">Facultad:</label>
-                            <input type="text" class="form-control" id="facultad" name="facultad" placeholder=<?php echo $ci_modificar?>>
+                            <label for="Carrera" class="form-label text-white">Carrera:</label>
+                            <input type="text" class="form-control" placeholder= "Ingenieria de Sistemas" >
+                            </div>
                             </div>
                             <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary" id="b_boton" name="b_boton">GUARDAR</button>
-                            <a href="modificar_usuario.php" class="btn btn-primary">CANCELAR</a>
-                            </div>
+    <button type="submit" class="btn btn-primary me-2" id="b_boton" name="b_boton">GUARDAR</button>
+    <a href="modificar_usuario.php" class="btn btn-danger ms-2">CANCELAR</a>
+</div>
+
                             
                         </form>
                         </div>
@@ -181,8 +229,6 @@ $nombreUsuario = $row['nombre'];
 
         </div>
     </div>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     <script src="../../js/MenuLateral.js"></script>
 </body>

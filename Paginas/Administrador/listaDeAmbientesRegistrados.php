@@ -148,52 +148,54 @@ $nombreUsuario = $row['nombre'];
 
 
         <div class="main p-3">
-            <div class="container text-center">
-                <h2 class="lista-title">LISTA DE AMBIENTES REGISTRADOS</h2>
-                <form action="accion.php" method="POST">
-                    <table class="table table-striped">
-                        <thead>
+    <div class="container text-center">
+        <h2 class="lista-title">LISTA DE AMBIENTES REGISTRADOS</h2>
+    
+        <form action="accion.php" method="POST">
+            <div style="height: 700px; overflow-y: auto;">
+                <table class="table table-striped">
+                    <thead class="thead-sticky">
+                        <tr>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Capacidad</th>
+                            <th>Ubicación</th>
+                            <th>Piso</th>
+                            <th>Periodo de Examen</th>
+                            <th>Fecha de Inicio</th>
+                            <th>Fecha de Fin</th>
+                            <th>Horarios</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php 
+                        
+                        $ambientes_sql = mysqli_query($conexion, "SELECT * FROM ambientes");
+                        while ($ambientes = mysqli_fetch_array($ambientes_sql)){ ?>    
                             <tr>
-                                <th>Imagen</th>
-                                <th>Nombre</th>
-                                <th>Capacidad</th>
-                                <th>Ubicación</th>
-                                <th>Periodo de Examen</th>
-                                <th>Fecha de Inicio</th>
-                                <th>Fecha de Fin</th>
-                                <th>Horario</th>
-                                <th>Acciones</th>
+                                <td><img src="../../Img/Ambientes/<?php echo $ambientes[9]; ?>" alt="" width="100"></td>
+                                <td><?php echo $ambientes[1]; ?></td>
+                                <td><?php echo $ambientes[2]; ?></td>
+                                <td><?php echo $ambientes[3]; ?></td>
+                                <td><?php echo $ambientes[4]; ?></td>
+                                <td><?php echo $ambientes[5]; ?></td>
+                                <td><?php echo $ambientes[6]; ?></td>
+                                <td><?php echo $ambientes[7]; ?></td>
+                                <td><?php echo $ambientes[8]; ?></td>
+                                <td>
+                                <a href='editarAmbiente.php?id=<?php echo $ambientes['id']; ?>' class='btn btn-primary'><i class="bi bi-pencil"></i>Editar</a>
+    <a href='eliminarAmbiente.php?id=<?php echo $ambientes['id']; ?>' class='btn btn-danger'><i class="bi bi-trash"></i>Eliminar</a>
+</td>
+
                             </tr>
-                        </thead>
-                        <tbody>
-                            <?php $ambientes_sql=mysqli_query($conexion,"Select * from ambientes");
-                            while ($ambientes=mysqli_fetch_array($ambientes_sql)){
-                                ?>
-                            
-                                <tr>
-                                
-                                    <td><img src="../../Img/Ambientes<?php echo $ambientes[8]; ?>" alt="" width="100"></td>
-                                    <td><?php echo $ambientes[1]; ?></td>
-                                    <td><?php echo $ambientes[2]; ?></td>
-                                    <td><?php echo $ambientes[3]; ?></td>
-                                    <td><?php echo $ambientes[4]; ?></td>
-                                    <td><?php echo $ambientes[5]; ?></td>
-                                    <td><?php echo $ambientes[6]; ?></td>
-                                    <td><?php echo $ambientes[7]; ?></td>
-                                    <td>
-                                        <a href='editarAmbiente.php?id=<?php echo $ambientes['id']; ?>' class='btn btn-primary'>Editar</a>
-                                        <a href='eliminarAmbiente.php?id=<?php echo $ambientes['id']; ?>' class='btn btn-danger'>Eliminar</a>
-                                    </td>
-                                </tr>
-                            
-                            <?php 
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
+                        <?php } ?>
+                    </tbody>
+                </table>
             </div>
-        </div>
+        </form>
+    </div>
+</div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script src="../../js/MenuLateral.js"></script>
 </body>

@@ -144,7 +144,9 @@ $nombreUsuario = $row['nombre'];
                                     
 
                                     <div class="container">
+                                        
         <h1>Tabla de usuarios</h1>
+        <div style="overflow-x: auto; overflow-y: auto; max-height: 400px;">
         <table class="table table-striped" id="searchResultsTable">
         <thead>
         <tr>
@@ -157,9 +159,11 @@ $nombreUsuario = $row['nombre'];
         <tbody id="contend">
 
         </tbody>
+</table>
+</div>
        <script>
 
-
+      
 
         getData()
         

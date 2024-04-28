@@ -1,4 +1,6 @@
+
 <?php
+
 require_once '../../config/validacion_session.php';
 require_once '../../config/conexion.php';
 
@@ -127,78 +129,155 @@ $nombreUsuario = $row['nombre'];
 
         <title>Registrar Usuario</title>
 <link rel="stylesheet" type="text/css" href="../cssp/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 <script>
 function enviarFormulario() {
-    // Obtener el formulario
+    // Obtener el formulario y los valores de los campos
     var formulario = document.getElementById("formularioRegistro");
+    var nombre = document.getElementsByName("nombre")[0].value;
+    var apellido = document.getElementsByName("apellido")[0].value;
+    var ci = document.getElementsByName("ci")[0].value;
+    var correo = document.getElementsByName("correo")[0].value;
     var contrasena = document.getElementById("contrasena").value;
     var confirmarContrasena = document.getElementById("confirmar_contrasena").value;
-    if (contrasena !== confirmarContrasena) {
-        alert("Las contraseñas no coinciden. Por favor, intenta de nuevo.");
+    var materias = document.getElementsByName("materias")[0].value;
+    var carrera = document.getElementsByName("carrera")[0].value;
+    
+    // Expresiones regulares para las validaciones
+    var letras = /^[a-zA-Z\s]+$/;
+    var numeros = /^[0-9]+$/;
+
+    // Validar nombre y apellido
+    // Validar nombre y apellido
+    if (!nombre.match(letras) || nombre.length < 4) {
+        mostrarErrorCampo("nombre", "El nombre solo debe contener letras y tener al menos 4 caracteres.");
         return;
     }
-    // Enviar el formulario utilizando AJAX
+    if (!apellido.match(letras) || apellido.length < 4) {
+        mostrarErrorCampo("apellido", "El apellido solo debe contener letras y tener al menos 4 caracteres.");
+        return;
+    }
+
+    // Validar CI
+    if (!ci.match(numeros) || ci.length < 7) {
+        mostrarErrorCampo("ci", "La cédula de identidad solo debe contener números y tener al menos 7 dígitos.");
+        return;
+    }
+
+    // Validar materias
+    if (materias.length < 4) {
+        mostrarErrorCampo("materias", "El campo de materias debe tener al menos 4 caracteres.");
+        return;
+    }
+
+    // Validar carrera
+    if (!carrera.match(letras) || carrera.length < 4) {
+        mostrarErrorCampo("carrera", "La carrera solo debe contener letras y tener al menos 4 caracteres.");
+        return;
+    }
+
+    // Validar correo electrónico
+    // Se puede utilizar una expresión regular para validar el formato del correo, 
+    // pero por simplicidad en este ejemplo no se incluye.
+
+    // Validar contraseñas
+    if (contrasena.length < 8 || contrasena !== confirmarContrasena) {
+        mostrarErrorCampo("contrasena", "Las contraseñas deben tener al menos 8 caracteres y coincidir.");
+        return;
+    }
+
+    // Si todas las validaciones pasan, enviar el formulario
     var xhr = new XMLHttpRequest();
     xhr.open(formulario.method, formulario.action, true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.onload = function() {
         if (xhr.status === 200) {
-            // Si la respuesta es exitosa, mostrar el mensaje en una ventana emergente
             var respuesta = xhr.responseText;
             mostrarVentanaEmergente(respuesta);
-            // Borrar los datos del formulario
             formulario.reset();
-            // Aumentar el tamaño del cuerpo
             document.body.style.fontSize = "20px";
         } else {
-            // Si hay un error en la respuesta, mostrar un mensaje de error
             alert('Error al registrar usuario: ' + xhr.statusText);
         }
     };
-
-    xhr.send(new URLSearchParams(new FormData(formulario)))
+    xhr.send(new URLSearchParams(new FormData(formulario)));
 }
 
-function mostrarVentanaEmergente(mensaje) {
-    // Crear la ventana emergente
-    var ventanaEmergente = document.createElement('div');
-    ventanaEmergente.classList.add('ventana-emergente');
+// Función para mostrar errores debajo de los campos correspondientes
+function mostrarErrorCampo(campo, mensaje) {
+    var elementoCampo = document.getElementsByName(campo)[0];
+    var errorElemento = document.createElement("div");
+    errorElemento.className = "error-mensaje";
+    errorElemento.textContent = mensaje;
+    
+    // Verificar si el campo es la contraseña
+    if (campo === 'contrasena') {
+        var contenedorPadre = elementoCampo.parentNode;
+        var icono = contenedorPadre.querySelector('.toggle-password');
+        
+        if (icono) {
+            // Si hay un icono, insertar el mensaje de error después del icono
+            contenedorPadre.insertBefore(errorElemento, icono.nextSibling);
+            return; // Salir de la función, ya que hemos insertado el mensaje de error
+        }
+    }
+    
+    // Insertar el mensaje de error debajo del campo
+    var contenedorCampo = elementoCampo.parentNode;
+    contenedorCampo.insertBefore(errorElemento, elementoCampo.nextSibling);
+}
 
-    // Crear el contenido de la ventana emergente
-    var contenido = document.createElement('div');
-    contenido.classList.add('contenido');
-    contenido.innerHTML = mensaje;
 
-    // Crear el botón para cerrar la ventana emergente
-    var botonCerrar = document.createElement('button');
-    botonCerrar.textContent = 'Aceptar';
-    botonCerrar.addEventListener('click', function() {
-        // Cerrar la ventana emergente al hacer clic en el botón
-        document.body.removeChild(ventanaEmergente);
+
+
+
+// Función para eliminar los mensajes de error
+function limpiarMensajesError() {
+    var errores = document.querySelectorAll(".error-mensaje");
+    errores.forEach(function(error) {
+        error.parentNode.removeChild(error);
     });
-
-    // Agregar el contenido y el botón a la ventana emergente
-    ventanaEmergente.appendChild(contenido);
-    ventanaEmergente.appendChild(botonCerrar);
-
-    // Agregar la ventana emergente al cuerpo del documento
-    document.body.appendChild(ventanaEmergente);
 }
+
+
+function mostrarVentanaEmergente(respuesta) {
+    if (respuesta.includes("Error") || respuesta.includes("correo electrónico ya está registrado")) {
+        Swal.fire({
+            title: "Error",
+            text: respuesta,
+            icon: "error",
+            confirmButtonText: "Aceptar"
+        });
+    } else {
+        Swal.fire({
+            title: "¡Buen trabajo!",
+            text: respuesta,
+            icon: "success",
+            confirmButtonText: "Aceptar"
+        });
+    }
+}
+
+
+
+
 function togglePasswordVisibility(inputId) {
     var input = document.getElementById(inputId);
     var icon = document.getElementById('toggle' + inputId.charAt(0).toUpperCase() + inputId.slice(1) + 'Icon');
 
     if (input.type === "password") {
         input.type = "text";
-        icon.textContent = " 👁️‍🗨️";
+        icon.innerHTML = "👁️‍🗨️";
     } else {
         input.type = "password";
-        icon.textContent = "🔒";
+        icon.innerHTML = "🔒";
     }
 }
 
 
 </script>
+
 </head>
 <body>
 
@@ -206,18 +285,20 @@ function togglePasswordVisibility(inputId) {
             <div class="container">
                 <h2>Registrar Usuario</h2>
                 <!-- Agregar el identificador al formulario y llamar a la función JavaScript al hacer clic en el botón Registrar -->
-                <form id="formularioRegistro" method="post" action="../../config/procesar_registro.php" onsubmit="event.preventDefault(); enviarFormulario();">
+                
+                <form id="formularioRegistro" method="post" action="../../config/procesar_registro.php" onsubmit="event.preventDefault(); limpiarMensajesError(); enviarFormulario();">
+
                     <input type="text" name="nombre" placeholder="Nombres" required>
                     <input type="text" name="apellido" placeholder="Apellidos" required>
+                    <input type="text" name="ci" placeholder="Cédula de Identidad" required>
                     <input type="email" name="correo" placeholder="Correo electrónico" required>
-
                     <input type="password" name="contrasena" id="contrasena" placeholder="Contraseña" required>
                     <span class="toggle-password" onclick="togglePasswordVisibility('contrasena')">
-                        <i id="togglePasswordIcon"> 👁️‍🗨️</i> 
+                    <i class="bi bi-eye-fill text-dark" id="toggleConfirmPasswordIcon"></i>
                     </span>
                     <input type="password" name="confirmar_contrasena" id="confirmar_contrasena" placeholder="Confirmar Contraseña" required>
                     <span class="toggle-password" onclick="togglePasswordVisibility('confirmar_contrasena')">
-                        <i id="toggleConfirmPasswordIcon"> 👁️‍🗨️</i>
+                        <i class="bi bi-eye-fill text-dark" id="toggleConfirmPasswordIcon"></i>
                     </span>
 
                     <input type="text" name="materias" placeholder="Materias" required> 
@@ -226,8 +307,8 @@ function togglePasswordVisibility(inputId) {
                         <option value="1">Administrador</option>
                         <option value="2">Docente</option>
                     </select>
-                    <button type="submit">Registrar</button>
-                    <button type="button" onclick="window.location.href='./HomeA.php'">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">REGISTRAR</button>
+                    <button type="button" class="btn btn-danger" onclick="window.location.href='./HomeA.php'">CANCELAR</button>
                 </form>
             </div>
         </div>
