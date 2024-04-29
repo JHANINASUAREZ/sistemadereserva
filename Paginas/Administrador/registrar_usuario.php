@@ -282,7 +282,7 @@ function togglePasswordVisibility(inputId) {
 <body>
 
         <div class="main p-3">
-            <div class="container">
+            <div class="container"style="margin-top:-10px;">
                 <h2>Registrar Usuario</h2>
                 <!-- Agregar el identificador al formulario y llamar a la función JavaScript al hacer clic en el botón Registrar -->
                 

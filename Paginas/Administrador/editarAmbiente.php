@@ -77,7 +77,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
        
         .scroll-container {
-            max-height: 800px; 
+            max-height: 700px; 
             overflow-y: auto;
         }
     </style>
@@ -183,7 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
 
-    <div class="main p-3" style="max-width: 800px; margin: 0 auto; font-size: 18px;">
+    <div class="main p-3" style="max-width: 600px; margin: 0 auto; font-size: 18px;">
     <h2>Editar Ambiente</h2>
     <div class="scroll-container">
         <div class="form-container">

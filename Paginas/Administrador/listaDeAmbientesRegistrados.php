@@ -170,8 +170,14 @@ $nombreUsuario = $row['nombre'];
                     </thead>
                     <tbody>
                         <?php 
+                         $host = "localhost";
+                         $user = "root";
+                         $password="";
+                         $db = "reservasumss1";
                         
-                        $ambientes_sql = mysqli_query($conexion, "SELECT * FROM ambientes");
+                         $conexion= new mysqli($host,$user,$password,$db);
+                        
+                        $ambientes_sql = mysqli_query($conexion , "SELECT * FROM ambientes");
                         while ($ambientes = mysqli_fetch_array($ambientes_sql)){ ?>    
                             <tr>
                                 <td><img src="../../Img/Ambientes/<?php echo $ambientes[9]; ?>" alt="" width="100"></td>

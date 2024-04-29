@@ -133,7 +133,7 @@ $nombreUsuario = $row['nombre'];
         <div class="modal-header d-flex justify-content-center">
     <h5 class="modal-title text-center" id="exampleModalLabel2" style="font-size: 24px; color: white;">Registrar Ambiente</h5>
 </div>
-            <div class="modal-body p-4" style=" color: white;">
+            <div class="modal-body p-4" style=" color: white;margin-top:-30px;">
                 <form action="guardar_ambiente.php" method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="nombre">Nombre del Ambiente</label>
@@ -176,7 +176,7 @@ $nombreUsuario = $row['nombre'];
 
                     <div class="form-group">
           <label for="horario">Horario Disponible</label>
-    <select class="form-control" id="horario" name="horario[]" multiple required>
+    <select class="form-control" id="horario" name="horarios[]" multiple required>
         <option value="06:45">06:45</option>
         <option value="08:15">08:15</option>
         <option value="09:45">09:45</option>
